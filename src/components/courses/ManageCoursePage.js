@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { loadCourses } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
-import CourseList from "./CourseList";
 
-const CoursesPage = props => {
+const ManageCoursePage = props => {
   const { loadCourses, loadAuthors, courses, authors } = props;
 
   useEffect(() => {
@@ -24,13 +23,12 @@ const CoursesPage = props => {
 
   return (
     <>
-      <h2>Courses</h2>
-      <CourseList courses={courses} />
+      <h2>Manage Courses</h2>
     </>
   );
 };
 
-CoursesPage.propTypes = {
+ManageCoursePage.propTypes = {
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
@@ -38,15 +36,7 @@ CoursesPage.propTypes = {
 };
 
 const mapStateToProps = ({ courses, authors }) => ({
-  courses:
-    authors.length === 0
-      ? []
-      : courses.map(course => {
-          return {
-            ...course,
-            authorName: authors.find(a => a.id === course.authorId).name
-          };
-        }),
+  courses,
   authors
 });
 
@@ -55,4 +45,4 @@ const mapDispatchToProps = {
   loadAuthors
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
