@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 import { loadCourses } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 
-const ManageCoursePage = props => {
-  const { loadCourses, loadAuthors, courses, authors } = props;
-
+const ManageCoursePage = ({ loadCourses, loadAuthors, courses, authors }) => {
   useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch(error => {

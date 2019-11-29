@@ -5,9 +5,7 @@ import { loadCourses } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import CourseList from "./CourseList";
 
-const CoursesPage = props => {
-  const { loadCourses, loadAuthors, courses, authors } = props;
-
+const CoursesPage = ({ loadCourses, loadAuthors, courses, authors }) => {
   useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch(error => {
