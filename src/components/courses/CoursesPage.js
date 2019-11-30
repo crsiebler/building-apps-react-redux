@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import { loadCourses } from "../../redux/actions/courseActions";
+import { toast } from "react-toastify";
+import { loadCourses, deleteCourse } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import Spinner from "../common/Spinner";
 import CourseList from "./CourseList";
@@ -12,7 +13,8 @@ const CoursesPage = ({
   courses,
   authors,
   loadCourses,
-  loadAuthors
+  loadAuthors,
+  deleteCourse
 }) => {
   const [redirectToAddCoursePage, setRedirectToAddCoursePage] = useState(false);
 
@@ -30,6 +32,13 @@ const CoursesPage = ({
     }
   }, []);
 
+  const handleDeleteCourse = course => {
+    toast.success("Course deleted");
+    deleteCourse(course).catch(error => {
+      toast.error("Delete failed. " + error.message, { autoClose: false });
+    });
+  };
+
   return (
     <>
       {redirectToAddCoursePage && <Redirect to="/course" />}
@@ -45,7 +54,7 @@ const CoursesPage = ({
           >
             Add Course
           </button>
-          <CourseList courses={courses} />
+          <CourseList courses={courses} onDeleteClick={handleDeleteCourse} />
         </>
       )}
     </>
@@ -57,7 +66,8 @@ CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
-  loadAuthors: PropTypes.func.isRequired
+  loadAuthors: PropTypes.func.isRequired,
+  deleteCourse: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ apiCallsInProgress, courses, authors }) => ({
@@ -76,7 +86,8 @@ const mapStateToProps = ({ apiCallsInProgress, courses, authors }) => ({
 
 const mapDispatchToProps = {
   loadCourses,
-  loadAuthors
+  loadAuthors,
+  deleteCourse
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
