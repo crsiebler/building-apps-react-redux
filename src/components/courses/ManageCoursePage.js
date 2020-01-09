@@ -8,7 +8,7 @@ import { newCourse } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
 import CourseForm from "./CourseForm";
 
-const ManageCoursePage = ({
+export const ManageCoursePage = ({
   history,
   courses,
   authors,
